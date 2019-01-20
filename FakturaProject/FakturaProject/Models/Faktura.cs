@@ -9,7 +9,7 @@ namespace FakturaWeb.Models
 {
     public class Faktura
     {
-        public int ID { get; set; }
+        public int FakturaID { get; set; }
         public DateTime Datum { get; set; }
         public string BrojFakture { get; set; }
         public float Ukupno { get; set; }

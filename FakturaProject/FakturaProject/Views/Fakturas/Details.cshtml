@@ -1,0 +1,42 @@
+﻿@model FakturaWeb.Models.Faktura
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Faktura</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Datum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Datum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BrojFakture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BrojFakture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ukupno)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ukupno)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FakturaID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

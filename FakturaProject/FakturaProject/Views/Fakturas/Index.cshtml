@@ -1,0 +1,45 @@
+﻿@model IEnumerable<FakturaWeb.Models.Faktura>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Datum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BrojFakture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ukupno)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Datum)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BrojFakture)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ukupno)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.FakturaID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.FakturaID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.FakturaID })
+        </td>
+    </tr>
+}
+
+</table>

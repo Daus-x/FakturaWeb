@@ -167,9 +167,12 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\FakturasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\StavkasController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\FakturaDBContext.cs" />
+    <Compile Include="DAL\FakturaInializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -227,6 +230,16 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Fakturas\Create.cshtml" />
+    <Content Include="Views\Fakturas\Delete.cshtml" />
+    <Content Include="Views\Fakturas\Details.cshtml" />
+    <Content Include="Views\Fakturas\Edit.cshtml" />
+    <Content Include="Views\Fakturas\Index.cshtml" />
+    <Content Include="Views\Stavkas\Create.cshtml" />
+    <Content Include="Views\Stavkas\Delete.cshtml" />
+    <Content Include="Views\Stavkas\Details.cshtml" />
+    <Content Include="Views\Stavkas\Edit.cshtml" />
+    <Content Include="Views\Stavkas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
