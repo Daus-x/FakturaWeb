@@ -7,7 +7,7 @@ using FakturaWeb.Models;
 
 namespace FakturaProject.DAL
 {
-    public class FakturaInializer : DropCreateDatabaseIfModelChanges<FakturaDBContext>
+    public class FakturaInitializer : DropCreateDatabaseAlways<FakturaDBContext>
     {
         protected override void Seed(FakturaDBContext context)
         {
@@ -27,7 +27,7 @@ namespace FakturaProject.DAL
             var fakt = new List<Faktura>
             {
                 new Faktura{FakturaID=1, BrojFakture="123sff99", Datum=DateTime.Parse("2005-09-01"), Ukupno=3000},
-                new Faktura{FakturaID=2, BrojFakture="12sfsdfs", Datum=DateTime.Parse("2005-10-02"), Ukupno=123}
+                new Faktura{FakturaID=2, BrojFakture="12sfsdfs", Datum=DateTime.Parse("2005-10-02"), Ukupno=2250}
             };
 
             fakt.ForEach(s => context.Fakturas.Add(s));
