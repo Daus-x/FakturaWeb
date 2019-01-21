@@ -29,10 +29,14 @@ namespace FakturaProject.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Faktura faktura = db.Fakturas.Find(id);
-            if (faktura == null)
+            List<Stavka> listaStavkas = db.Stavkas.Where(s => s.FakturaID == faktura.FakturaID).OrderBy(s => s.RedniBroj).ToList();
+
+            if (listaStavkas == null || faktura == null)
             {
                 return HttpNotFound();
             }
+
+            ViewData["listStavkas"] = listaStavkas;
             return View(faktura);
         }
 

@@ -1,41 +1,85 @@
-﻿@model FakturaWeb.Models.Faktura
+﻿@using FakturaWeb.Models
+@model FakturaWeb.Models.Faktura
+
 
 @{
     ViewBag.Title = "Details";
+    var listStavkas = (List<Stavka>)ViewData["listStavkas"];
 }
 
 <h2>Details</h2>
 
-<div>
+
     <h4>Faktura</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Datum)
-        </dt>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Datum)
+            </th>
 
-        <dd>
-            @Html.DisplayFor(model => model.Datum)
-        </dd>
+            <th>
+                @Html.DisplayNameFor(model => model.BrojFakture)
+            </th>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BrojFakture)
-        </dt>
+            <th>
+                @Html.DisplayNameFor(model => model.Ukupno)
+            </th>
+        </tr>
+        
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.Datum)
+            </td>
 
-        <dd>
-            @Html.DisplayFor(model => model.BrojFakture)
-        </dd>
+            <td>
+                @Html.DisplayFor(model => model.BrojFakture)
+            </td>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Ukupno)
-        </dt>
+            <td>
+                @Html.DisplayFor(model => model.Ukupno)
+            </td>
+        </tr>
+        
+    </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.Ukupno)
-        </dd>
+<table class="table">
+    <tr>
+        <th>
+            Redni broj
+        </th>
+        <th>
+            Kolicina
+        </th>
+        <th>
+            Cena
+        </th>
+        <th>
+            Ukupno
+        </th>
+        
+    </tr>
 
-    </dl>
-</div>
+    @foreach (var item in listStavkas)
+    {
+        <tr>
+            <td>
+                @item.RedniBroj
+            </td>
+            <td>
+                @item.Kolicina
+            </td>
+            <td>
+                @item.Cena
+            </td>
+            <td>
+                @item.Ukupno
+            </td>
+            
+        </tr>
+    }
+    
+</table>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.FakturaID }) |
     @Html.ActionLink("Back to List", "Index")
