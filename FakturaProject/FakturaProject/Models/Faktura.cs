@@ -13,7 +13,8 @@ namespace FakturaWeb.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int FakturaID { get; set; }
 
-        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Datum { get; set; }
 
         [Required]
