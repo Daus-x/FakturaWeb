@@ -29,14 +29,10 @@ namespace FakturaProject.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Faktura faktura = db.Fakturas.Find(id);
-            List<Stavka> listaStavkas = db.Stavkas.Where(s => s.FakturaID == faktura.FakturaID).OrderBy(s => s.RedniBroj).ToList();
-
-            if (listaStavkas == null || faktura == null)
+            if (faktura == null)
             {
                 return HttpNotFound();
             }
-
-            ViewData["listStavkas"] = listaStavkas;
             return View(faktura);
         }
 
@@ -51,7 +47,7 @@ namespace FakturaProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Datum,BrojFakture,Ukupno")] Faktura faktura)
+        public ActionResult Create([Bind(Include = "FakturaID,Datum,BrojFakture,Ukupno")] Faktura faktura)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +79,7 @@ namespace FakturaProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Datum,BrojFakture,Ukupno")] Faktura faktura)
+        public ActionResult Edit([Bind(Include = "FakturaID,Datum,BrojFakture,Ukupno")] Faktura faktura)
         {
             if (ModelState.IsValid)
             {

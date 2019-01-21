@@ -18,7 +18,8 @@ namespace FakturaProject.Controllers
         // GET: Stavkas
         public ActionResult Index()
         {
-            return View(db.Stavkas.ToList());
+            var stavkas = db.Stavkas.Include(s => s.Faktura);
+            return View(stavkas.ToList());
         }
 
         // GET: Stavkas/Details/5
@@ -39,6 +40,7 @@ namespace FakturaProject.Controllers
         // GET: Stavkas/Create
         public ActionResult Create()
         {
+            ViewBag.FakturaID = new SelectList(db.Fakturas, "FakturaID", "BrojFakture");
             return View();
         }
 
@@ -47,7 +49,7 @@ namespace FakturaProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,RedniBroj,Kolicina,Cena,Ukupno")] Stavka stavka)
+        public ActionResult Create([Bind(Include = "StavkaID,RedniBroj,Kolicina,Cena,Ukupno,FakturaID")] Stavka stavka)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +58,7 @@ namespace FakturaProject.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.FakturaID = new SelectList(db.Fakturas, "FakturaID", "BrojFakture", stavka.FakturaID);
             return View(stavka);
         }
 
@@ -71,6 +74,7 @@ namespace FakturaProject.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.FakturaID = new SelectList(db.Fakturas, "FakturaID", "BrojFakture", stavka.FakturaID);
             return View(stavka);
         }
 
@@ -79,7 +83,7 @@ namespace FakturaProject.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,RedniBroj,Kolicina,Cena,Ukupno")] Stavka stavka)
+        public ActionResult Edit([Bind(Include = "StavkaID,RedniBroj,Kolicina,Cena,Ukupno,FakturaID")] Stavka stavka)
         {
             if (ModelState.IsValid)
             {
@@ -87,6 +91,7 @@ namespace FakturaProject.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.FakturaID = new SelectList(db.Fakturas, "FakturaID", "BrojFakture", stavka.FakturaID);
             return View(stavka);
         }
 
