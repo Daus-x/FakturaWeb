@@ -179,6 +179,7 @@
     <Compile Include="Models\Faktura.cs" />
     <Compile Include="Models\Stavka.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\FakturaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

@@ -7,7 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using FakturaProject.DAL;
+using FakturaProject.ViewModel;
 using FakturaWeb.Models;
+
 
 namespace FakturaProject.Controllers
 {
@@ -18,6 +20,7 @@ namespace FakturaProject.Controllers
         // GET: Fakturas
         public ActionResult Index()
         {
+            
             return View(db.Fakturas.ToList());
         }
 
@@ -39,6 +42,7 @@ namespace FakturaProject.Controllers
         // GET: Fakturas/Create
         public ActionResult Create()
         {
+
             return View();
         }
 
@@ -71,25 +75,35 @@ namespace FakturaProject.Controllers
             {
                 return HttpNotFound();
             }
-            return View(faktura);
+            FakturaViewModel viewModel = CreateViewModelFromFaktura(faktura);
+
+            return View(viewModel);
         }
+
 
         // POST: Fakturas/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FakturaID,Datum,BrojFakture,Ukupno")] Faktura faktura)
+        public ActionResult Edit(FakturaViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(faktura).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (viewModel.Faktura != null && viewModel.Stavkas != null)
+                {
+                    decimal ukupnoF = SaveChangesInStavkasAndCalculateUkupno(viewModel);
+
+                    UpdateFaktura(viewModel, ukupnoF);
+
+                    return RedirectToAction("Index");
+                }
+
             }
-            return View(faktura);
+            return View(viewModel);
         }
 
+        
         // GET: Fakturas/Delete/5
         public ActionResult Delete(int? id)
         {
@@ -114,6 +128,44 @@ namespace FakturaProject.Controllers
             db.Fakturas.Remove(faktura);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        private void UpdateFaktura(FakturaViewModel viewModel, decimal ukupnoF)
+        {
+            Faktura faktura = db.Fakturas.Find(viewModel.Faktura.FakturaID);
+            faktura.Ukupno = ukupnoF;
+
+            db.Entry(faktura).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        private static FakturaViewModel CreateViewModelFromFaktura(Faktura faktura)
+        {
+            FakturaViewModel viewModel = new FakturaViewModel
+            {
+                Faktura = faktura,
+                Stavkas = faktura.Stavkas.ToList()
+            };
+            return viewModel;
+        }
+
+        private decimal SaveChangesInStavkasAndCalculateUkupno(FakturaViewModel viewModel)
+        {
+            decimal ukupno = 0;
+            for (int i = 0; i < viewModel.Stavkas.Count(); i++)
+            {
+                Stavka stavka = db.Stavkas.Find(viewModel.Stavkas[i].StavkaID);
+
+                stavka.Kolicina = viewModel.Stavkas[i].Kolicina;
+                stavka.Cena = viewModel.Stavkas[i].Cena;
+                stavka.Ukupno = stavka.Cena * stavka.Kolicina;
+                ukupno += stavka.Ukupno;
+
+                db.Entry(stavka).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+
+            return ukupno;
         }
 
         protected override void Dispose(bool disposing)

@@ -23,7 +23,7 @@ namespace FakturaWeb.Models
 
         public decimal Ukupno { get; set; }
         
-        public ICollection<Stavka> Stavkas { get; set; }
+        public virtual ICollection<Stavka> Stavkas { get; set; }
 
     }
 }
