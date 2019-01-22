@@ -74,11 +74,36 @@ namespace FakturaProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                Faktura faktura = viewModel.Faktura;
+                db.Fakturas.Add(faktura);
+                db.SaveChanges();
+
+                decimal ukupno = 0;
+                ukupno = SaveStavkasAndCalculateUkupno(viewModel, faktura, ukupno);
+
+                faktura.Ukupno = ukupno;
+                db.Entry(faktura).State = EntityState.Modified;
+                db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-
             return View(viewModel);
+        }
+
+        private decimal SaveStavkasAndCalculateUkupno(FakturaViewModel viewModel, Faktura faktura, decimal ukupno)
+        {
+            for (int i = 0; i < viewModel.Stavkas.Count(); i++)
+            {
+                Stavka stavka = viewModel.Stavkas[i];
+                stavka.Ukupno = stavka.Cena * stavka.Kolicina;
+                stavka.FakturaID = faktura.FakturaID;
+                ukupno += stavka.Ukupno;
+
+                db.Stavkas.Add(stavka);
+                db.SaveChanges();
+            }
+
+            return ukupno;
         }
 
         // GET: Fakturas/Edit/5
@@ -110,7 +135,7 @@ namespace FakturaProject.Controllers
             {
                 if (viewModel.Faktura != null && viewModel.Stavkas != null)
                 {
-                    decimal ukupnoF = SaveChangesInStavkasAndCalculateUkupno(viewModel);
+                    decimal ukupnoF = UpdateChangesInStavkasAndCalculateUkupno(viewModel);
 
                     UpdateFaktura(viewModel, ukupnoF);
 
@@ -167,7 +192,7 @@ namespace FakturaProject.Controllers
             return viewModel;
         }
 
-        private decimal SaveChangesInStavkasAndCalculateUkupno(FakturaViewModel viewModel)
+        private decimal UpdateChangesInStavkasAndCalculateUkupno(FakturaViewModel viewModel)
         {
             decimal ukupno = 0;
             for (int i = 0; i < viewModel.Stavkas.Count(); i++)
