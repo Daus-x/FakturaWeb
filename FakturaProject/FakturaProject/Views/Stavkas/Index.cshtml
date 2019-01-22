@@ -6,9 +6,11 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 <table class="table">
     <tr>
         <th>
@@ -29,29 +31,30 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Faktura.BrojFakture)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RedniBroj)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Kolicina)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cena)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ukupno)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.StavkaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.StavkaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.StavkaID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Faktura.BrojFakture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RedniBroj)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Kolicina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cena)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ukupno)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.StavkaID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.StavkaID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.StavkaID })
+            </td>
+        </tr>
+    }
 
 </table>

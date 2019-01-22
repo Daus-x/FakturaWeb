@@ -170,7 +170,6 @@
     <Compile Include="Controllers\FakturasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StavkasController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\FakturaDBContext.cs" />
     <Compile Include="DAL\FakturaInitializer.cs" />
     <Compile Include="Global.asax.cs">

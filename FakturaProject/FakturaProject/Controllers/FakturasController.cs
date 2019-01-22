@@ -40,27 +40,45 @@ namespace FakturaProject.Controllers
         }
 
         // GET: Fakturas/Create
-        public ActionResult Create()
+        public ActionResult Create(int? number)
         {
+            if(number == null || number == 0)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                List<Stavka> stavkas = new List<Stavka>();
+                for (int i = 0; i < number; i++)
+                {
+                    stavkas.Add(new Stavka());
+                }
 
-            return View();
+                FakturaViewModel viewModel = new FakturaViewModel
+                {
+                    Faktura = new Faktura(),
+                    Stavkas = stavkas,
+                };
+                return View(viewModel);
+            }
         }
+
+    
 
         // POST: Fakturas/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FakturaID,Datum,BrojFakture,Ukupno")] Faktura faktura)
+        public ActionResult Create(FakturaViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
-                db.Fakturas.Add(faktura);
-                db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
 
-            return View(faktura);
+            return View(viewModel);
         }
 
         // GET: Fakturas/Edit/5

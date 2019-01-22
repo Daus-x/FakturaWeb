@@ -6,9 +6,23 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@using (Html.BeginForm("Create", "Fakturas", FormMethod.Get))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-md-2" >Upisite broj stavki</label>
+            <div class="col-md-10">
+                <input type="text" name="number" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 ">
+                <input type="submit" value="Nova Faktura" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<p></p>
 <table class="table">
     <tr>
         <th>
@@ -23,23 +37,24 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Datum)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BrojFakture)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ukupno)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.FakturaID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.FakturaID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.FakturaID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BrojFakture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ukupno)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.FakturaID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.FakturaID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.FakturaID })
+            </td>
+        </tr>
+    }
 
 </table>
